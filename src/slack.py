@@ -2,18 +2,27 @@ import json, os, requests
 
 project = os.environ['PROJECT_NAME']
 environment = os.environ['ENVIRONMENT_NAME'] 
+status = os.environ['DEPLOY_STATUS']
 
-def send_message(project: str, environment: str ) -> bool:
-  msg = ( f"Deploy of project { project } of environment { environment } completed.   :rocket:" )
+def send_message(project: str, environment: str, status: str) -> bool:
+  if status == 'success':
+    user = "Spacex"
+    msg = f"Deploy do projeto '{ project }' do ambiente '{ environment }' concluído com sucesso.   :rocket:"
+    icon_url = "https://ck-devops.s3.amazonaws.com/rocket-icon.png"
+  else:
+    user = "Houston, we have a problem!"
+    msg = f"Tem que ver isso ae, talkei. Projeto '{ project }' do ambiente '{ environment }' falhou.  :boom:"
+    icon_url = "https://ck-devops.s3.amazonaws.com/deploy-fail-icon.jpg"
+
   url = os.environ['SLACK_HOOK']
   data = json.dumps({
       "title": {
           "type": "plain_text",
           "text": "HealthCheck Fail"
       },
-      "username": "Deploy Notification",
+      "username": user,
       "text": msg,
-      "icon_url": "https://ck-devops.s3.amazonaws.com/rocket-icon.png",
+      "icon_url": icon_url,
       "channel": "C037Q3ZEYPM"
   })
 
@@ -24,4 +33,4 @@ def send_message(project: str, environment: str ) -> bool:
   
   return False
 
-send_message(project, environment)
+send_message(project, environment, status)

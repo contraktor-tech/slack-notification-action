@@ -11,7 +11,10 @@ inputs:
   environment-name:
     description: 'environment to project deploy'
     require: true
-  
+  deploy-status:
+    description: 'deploy status'
+    require: true
+
 runs:
   using: 'composite'
   steps:
@@ -24,11 +27,12 @@ runs:
       shell: bash
       run: |
         pip install -r ${{ github.action_path }}/src/require.txt
-        
+
     - name: send message to Slack
       shell: bash
       run: |
         export SLACK_HOOK=${{ inputs.slack-hook }}
         export PROJECT_NAME=${{ inputs.project-name }}
         export ENVIRONMENT_NAME=${{ inputs.environment-name }}
+        export DEPLOY_STATUS=${{ inputs.deploy-status }}
         python ${{ github.action_path }}/src/slack.py
