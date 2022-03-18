@@ -5,13 +5,13 @@ environment = os.environ['ENVIRONMENT_NAME']
 status = os.environ['DEPLOY_STATUS']
 
 def send_message(project: str, environment: str, status: str) -> bool:
-  user = "Spacex"
-  msg = f"Deploy do projeto '{ project }' do ambiente '{ environment }' concluído com sucesso.   :rocket:"
-  icon_url = "https://ck-devops.s3.amazonaws.com/rocket-icon.png"
+  user = "SpaceX"
+  msg = f"Deploy do projeto *{ project }* do ambiente *{ environment }* concluído com sucesso.   :rocket:"
+  icon_url = "https://ck-devops.s3.amazonaws.com/deploy-success-icon.png"
 
   if status == 'failure':
     user = "Houston, we have a problem!"
-    msg = f"Tem que ver isso ae, talkei. Projeto '{ project }' do ambiente '{ environment }' falhou.  :boom:"
+    msg = f"Tem que ver isso ae, talkei. Projeto *{ project }* do ambiente *{ environment }* falhou.  :boom:"
     icon_url = "https://ck-devops.s3.amazonaws.com/deploy-fail-icon.jpg"
 
   url = os.environ['SLACK_HOOK']
@@ -21,7 +21,10 @@ def send_message(project: str, environment: str, status: str) -> bool:
           "text": "HealthCheck Fail"
       },
       "username": user,
-      "text": msg,
+      "text": {
+				  "type": "mrkdwn",
+				  "text": msg
+      },
       "icon_url": icon_url,
       "channel": "C037Q3ZEYPM"
   })
