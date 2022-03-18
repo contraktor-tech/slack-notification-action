@@ -12,7 +12,7 @@ def send_message(project: str, environment: str, status: str) -> bool:
   if status == 'failure':
     user = "Houston, we have a problem!"
     msg = f"Tem que ver isso ae, talkei. Projeto *{ project }* do ambiente *{ environment }* falhou.  :boom:"
-    icon_url = "https://ck-devops.s3.amazonaws.com/deploy-fail-icon.jpg"
+    icon_url = "https://ck-devops.s3.amazonaws.com/deploy-fail-icon.png"
 
   url = os.environ['SLACK_HOOK']
   data = json.dumps({
@@ -21,10 +21,7 @@ def send_message(project: str, environment: str, status: str) -> bool:
           "text": "HealthCheck Fail"
       },
       "username": user,
-      "text": {
-				  "type": "mrkdwn",
-				  "text": msg
-      },
+      "text": msg,
       "icon_url": icon_url,
       "channel": "C037Q3ZEYPM"
   })
