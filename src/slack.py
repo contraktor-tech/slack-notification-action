@@ -24,4 +24,4 @@ def send_message(project: str, environment: str ) -> bool:
   
   return False
 
-send_message()
+send_message(project, environment)
