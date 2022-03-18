@@ -1,0 +1,34 @@
+name: 'Deploy notification in Slack'
+description: 'Send message to Slack when to occur project deploy.'
+author: 'Robson Andrade<robson.andrade@contraktor.com.br>'
+inputs:
+  slack-hook:
+    description: 'token connect Slack'
+    require: true
+  project-name:
+    description: 'project deploy'
+    require: true
+  environment-name:
+    description: 'environment to project deploy'
+    require: true
+  
+runs:
+  using: 'composite'
+  steps:
+    - name: make sure that python is installed
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: install dependencies
+      shell: bash
+      run: |
+        pip install -r ${{ github.action_path }}/src/require.txt
+        
+    - name: send message to Slack
+      shell: bash
+      run: |
+        export SLACK_HOOK=${{ inputs.slack-hook }}
+        export PROJECT_NAME=${{ inputs.project-name }}
+        export ENVIRONMENT_NAME=${{ inputs.environment-name }}
+        python ${{ github.action_path }}/src/slack.py
