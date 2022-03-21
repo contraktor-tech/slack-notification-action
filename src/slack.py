@@ -23,7 +23,7 @@ def send_message(project: str, environment: str, status: str) -> bool:
       "username": user,
       "text": msg,
       "icon_url": icon_url,
-      "channel": "C037Q3ZEYPM"
+      "channel": "C01UT9Q6NJ0"
   })
 
   response = requests.post(url, data=data)
