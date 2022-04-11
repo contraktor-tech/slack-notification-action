@@ -45,7 +45,7 @@ jobs:
 
   sonarqube:
     #needs: tests
-    runs-on: docker
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
