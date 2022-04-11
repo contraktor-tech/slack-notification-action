@@ -1,9 +1,7 @@
 name: pr
 on:
   push:
-    branches:
-      - master
-      - feat/CK-1933
+    branches: [master, feat/CK-1933]
 
 jobs:
   tests:
