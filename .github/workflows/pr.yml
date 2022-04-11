@@ -1,0 +1,62 @@
+name: PR
+on:
+  pull_request:
+    branches: ["master", "feat/ck-1933"]
+
+jobs:
+  #tests:
+    #runs-on: migrations
+    #steps:
+      #- uses: actions/checkout@v2
+      #- uses: actions/setup-python@v2
+        #with:
+          #python-version: '3.9'
+
+      #- name: Install dependencies
+        #run: |
+          #pip install -r require
+          #pip install -r require.dev
+
+      #- name: Create .env file
+        #run: |
+          #echo "export LOG_LEVEL=INFO" > .env
+          #echo "export TOKEN=${{ secrets.TOKEN }}" >> .env
+          #echo "export SLACK_HOOK=${{ secrets.SLACK_HOOK }}" >> .env
+          #echo "export SLACK_HOOK=${{ secrets.SLACK_HOOK }}" >> .env
+          #echo "export REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
+          #echo "export REDIS_USER=${{ secrets.REDIS_USER }}" >> .env
+          #echo "export REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> .env
+
+      #- name: run tests
+        #run: |
+          #pytest --cov-report=xml --cov=status-update --cov-report term-missing --cov ${GITHUB_WORKSPACE}/src
+          #sed -i "s|${GITHUB_WORKSPACE}|/github/workspace|g" coverage.xml
+
+      #- name: upload artifact
+        #uses: actions/upload-artifact@v2
+        #with:
+          #name: files
+          #path: |
+            #coverage.xml
+            #main.tf
+            #sonar-project.properties
+            #src
+          #retention-days: 1
+
+  sonarqube:
+    #needs: tests
+    runs-on: docker
+
+    steps:
+      - uses: actions/checkout@v2
+      #- name: download artifact
+        #uses: actions/download-artifact@v2
+        #with:
+          #name: files
+          #path: .
+
+      - name: SonarQube Analysis
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
