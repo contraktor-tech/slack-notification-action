@@ -5,6 +5,12 @@ inputs:
   slack-hook:
     description: 'token connect Slack'
     require: true
+  argocd-domain:
+    description: 'domain intern of Argo CD'
+    require: true
+  argocd-app:
+    description: 'application name at Argo CD'
+    require: true 
   project-name:
     description: 'project deploy'
     require: true
@@ -32,6 +38,8 @@ runs:
       shell: bash
       run: |
         export SLACK_HOOK=${{ inputs.slack-hook }}
+        export ARGOCD_DOMAIN=${{ inputs.argocd-domain }}
+        export ARGOCD_APP=${{ inputs.argocd-app }}
         export PROJECT_NAME=${{ inputs.project-name }}
         export ENVIRONMENT_NAME=${{ inputs.environment-name }}
         export DEPLOY_STATUS=${{ inputs.deploy-status }}
