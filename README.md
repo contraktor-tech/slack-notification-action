@@ -14,6 +14,12 @@ inputs:
   slack-hook:
     description: 'token connect Slack'
     require: true
+  argocd-domain:
+    description: 'domain intern of Argo CD'
+    require: true
+  argocd-app:
+    description: 'application name at Argo CD'
+    require: true 
   project-name:
     description: 'project deploy'
     require: true
