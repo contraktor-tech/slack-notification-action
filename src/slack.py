@@ -10,8 +10,8 @@ def send_message(argocd_domain: str, argocd_app: str, project: str, environment:
   user = "SpaceX"
   argocd_link = f'https://{ argocd_domain }/applications/{ argocd_app }?resource='
   msg = f""" 
-          O Argo CD está tentando fazer deploy do *{ project }* no ambiente *{ environment }*. :rocket:
-          Acompanhe a tentativa de deploy em *{ argocd_link }*.
+        O Argo CD está tentando fazer deploy do *{ project }* no ambiente *{ environment }*. :rocket:
+        Acompanhe a tentativa de deploy em *{ argocd_link }*.
         """
 
   icon_url = "https://ck-devops.s3.amazonaws.com/deploy-success-icon.png"
@@ -19,8 +19,8 @@ def send_message(argocd_domain: str, argocd_app: str, project: str, environment:
   if status == 'failure':
     user = "Houston, we have a problem!"
     msg = f"""
-            O Argo CD falhou na tentativa de deploy do *{ project }* no ambiente *{ environment }*.  :boom:
-            Verifique o erro em *{ argocd_link }*
+          O Argo CD falhou na tentativa de deploy do *{ project }* no ambiente *{ environment }*.  :boom:
+          Verifique o erro em *{ argocd_link }*
           """
 
     icon_url = "https://ck-devops.s3.amazonaws.com/deploy-fail-icon.png"

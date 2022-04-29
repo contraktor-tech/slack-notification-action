@@ -25,7 +25,8 @@ runs:
   using: 'composite'
   steps:
     - name: make sure that python is installed
-      if: !contains(runner.name, 'docker-runner')
+      if: |
+        !contains(runner.name, 'docker-runner')
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
