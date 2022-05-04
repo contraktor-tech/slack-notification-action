@@ -9,13 +9,19 @@ status = os.environ['DEPLOY_STATUS']
 def send_message(argocd_domain: str, argocd_app: str, project: str, environment: str, status: str) -> bool:
   user = "SpaceX"
   argocd_link = f'https://{ argocd_domain }/applications/{ argocd_app }?resource='
-  msg = f"O Argo CD está tentando fazer deploy do *{ project }* no ambiente *{ environment }*. :rocket: \nAcompanhe a tentativa de deploy em { argocd_link }"
+  msg = f"""
+  O Argo CD está tentando fazer deploy do *{ project }* no ambiente *{ environment }*. :rocket:
+  Acompanhe a tentativa de deploy em { argocd_link }
+  """
 
   icon_url = "https://ck-devops.s3.amazonaws.com/deploy-success-icon.png"
 
   if status == 'failure':
     user = "Houston, we have a problem!"
-    msg = f"O Argo CD falhou na tentativa de deploy do *{ project }* no ambiente *{ environment }*. :boom:\nVerifique o erro em { argocd_link }"
+    msg = f"""
+    O Argo CD falhou na tentativa de deploy do *{ project }* no ambiente *{ environment }*. :boom:
+    Verifique o erro em { argocd_link }
+    """
 
     icon_url = "https://ck-devops.s3.amazonaws.com/deploy-fail-icon.png"
 
