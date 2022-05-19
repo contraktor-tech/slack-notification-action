@@ -7,26 +7,50 @@
 [![Coverage](https://sonar.contraktor.com.br/api/project_badges/measure?project=contraktor-tech_slack-notification-action&metric=coverage&token=8731a24f1942601cd9a8778b04086650dd4d7795)](https://sonar.contraktor.com.br/dashboard?id=contraktor-tech_slack-notification-action)
 [![Lines of Code](https://sonar.contraktor.com.br/api/project_badges/measure?project=contraktor-tech_slack-notification-action&metric=ncloc&token=8731a24f1942601cd9a8778b04086650dd4d7795)](https://sonar.contraktor.com.br/dashboard?id=contraktor-tech_slack-notification-action)
 
-This action was created to send notifications to Slack
+Action que envia notificação de status de deploy para o Slack.
 
-```yaml
-inputs:
-  slack-hook:
-    description: 'token connect Slack'
-    require: true
-  argocd-domain:
-    description: 'domain intern of Argo CD'
-    require: true
-  argocd-app:
-    description: 'application name at Argo CD'
-    require: true 
-  project-name:
-    description: 'project deploy'
-    require: true
-  environment-name:
-    description: 'environment to project deploy'
-    require: true
-  deploy-status:
-    description: 'deploy status'
-    require: true
+## Inputs
+Todos os inputs são de definição obrigatória.
+
+- **slack-hook** → token de acesso do Slack
+- **argocd-domain** → dominío interno do ArgoCD
+- **argocd-app** → nome da aplicação no ArgoCD
+- **project-name** → aplicação
+- **environment-name** → ambiente
+- **deploy-status** → status do deploy
+
+## Etapas
+- Verifica se o Python está instalado
+- Instala as dependencias
+- Executa o script e envia a notificação para o Slack
+
+## Como usar
+Acesse a documentação no [Confluence](https://contraktor.atlassian.net/wiki/spaces/CONTRAKTOR/pages/16842753/Actions#%3Aslack_icon%3A-slack-notification-action) para ver uma pipeline de exemplo.
+
+- **sucesso no envio para deploy**
+```
+- name: deploy has succeeded - Send notification deploy to Slack
+  uses: contraktor-tech/slack-notification-action@v1
+  if: ${{ success() }}
+  with:
+    slack-hook: XXXX
+    argocd-domain: XXXX
+    argocd-app: XXXX
+    project-name: XXXX
+    environment-name: XXXX
+    deploy-status: 'success'
+```
+
+- **falha no envio para deploy**
+```
+- name: deploy has failed - Send notification deploy to Slack
+  uses: contraktor-tech/slack-notification-action@v1
+  if: ${{ failure() }}
+  with:
+    slack-hook: XXXX
+    argocd-domain: XXXX
+    argocd-app: XXXX
+    project-name: XXXX
+    environment-name: XXXX
+    deploy-status: 'failure'
 ```
