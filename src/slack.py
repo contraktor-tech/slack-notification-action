@@ -34,8 +34,8 @@ def send_message(argocd_domain: str, argocd_app: str, project: str, environment:
       "username": user,
       "text": msg,
       "icon_url": icon_url,
-      # "channel": "C01UT9Q6NJ0"
-      "channel": "C037Q3ZEYPM"
+      "channel": "C01UT9Q6NJ0"
+      # "channel": "C037Q3ZEYPM"
   })
 
   response = requests.post(url, data=data)
