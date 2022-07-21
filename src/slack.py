@@ -19,8 +19,7 @@ def send_message(argocd_domain: str, argocd_app: str, project: str, environment:
   if status == 'failure':
     user = "Houston, we have a problem!"
     msg = f"""
-    O Argo CD falhou na tentativa de deploy do *{ project }* no ambiente *{ environment }*. :boom:
-    Verifique o erro em { argocd_link }
+    A pipeline de deploy do *{ project }* no ambiente *{ environment }* quebrou. :boom:
     """
 
     icon_url = "https://ck-devops.s3.amazonaws.com/deploy-fail-icon.png"
@@ -35,7 +34,6 @@ def send_message(argocd_domain: str, argocd_app: str, project: str, environment:
       "text": msg,
       "icon_url": icon_url,
       "channel": "C01UT9Q6NJ0"
-      # "channel": "C037Q3ZEYPM"
   })
 
   response = requests.post(url, data=data)
